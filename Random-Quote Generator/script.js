@@ -18,3 +18,14 @@ document.getElementById("new-quote").addEventListener("click", function () {
         quoteElement.style.opacity = 1; // Fade-in effect
     }, 400);
 });
+
+document.getElementById("copy-quote").addEventListener("click", function () {
+    const quoteText = document.getElementById("quote").textContent;
+    navigator.clipboard.writeText(quoteText).then(() => {
+        const copyMsg = document.getElementById("copy-msg");
+        copyMsg.style.display = "inline";  // Show "Copied!" message
+        setTimeout(() => {
+            copyMsg.style.display = "none"; // Hide after 1.5 sec
+        }, 1500);
+    });
+});

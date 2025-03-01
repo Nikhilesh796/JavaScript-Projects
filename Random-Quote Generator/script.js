@@ -6,6 +6,7 @@ const quotes = [
     "Don’t watch the clock; do what it does. Keep going."
 ];
 
+// Change Quote on Button Click
 document.getElementById("new-quote").addEventListener("click", function () {
     const quoteElement = document.getElementById("quote");
     const randomIndex = Math.floor(Math.random() * quotes.length);
@@ -19,6 +20,7 @@ document.getElementById("new-quote").addEventListener("click", function () {
     }, 400);
 });
 
+// Copy Quote to Clipboard
 document.getElementById("copy-quote").addEventListener("click", function () {
     const quoteText = document.getElementById("quote").textContent;
     navigator.clipboard.writeText(quoteText).then(() => {

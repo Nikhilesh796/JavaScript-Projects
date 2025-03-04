@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense Tracker</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .container {
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+        width: 50%;
+        text-align: center;
+      }
+      .list-group-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2 class="text-light">Expense Tracker</h2>
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          id="expense-name"
+          class="form-control"
+          placeholder="Expense Name"
+        />
+        <input
+          type="number"
+          id="expense-amount"
+          class="form-control"
+          placeholder="Amount"
+        />
+        <button id="add-expense" class="btn btn-success">Add</button>
+      </div>
+      <ul id="expense-list" class="list-group"></ul>
+      <h4 class="text-light mt-3">Total: <span id="total-amount">0</span> ₹</h4>
+    </div>
+
+    <script>
+      let totalAmount = 0;
+      const expenseList = document.getElementById("expense-list");
+      const totalDisplay = document.getElementById("total-amount");
+
+      document
+        .getElementById("add-expense")
+        .addEventListener("click", function () {
+          const name = document.getElementById("expense-name").value.trim();
+          const amount = parseFloat(
+            document.getElementById("expense-amount").value
+          );
+
+          if (name && amount && amount > 0) {
+            totalAmount += amount;
+            totalDisplay.textContent = totalAmount;
+
+            const li = document.createElement("li");
+            li.className = "list-group-item";
+            li.innerHTML = `${name} - ₹${amount} <button class='btn btn-danger btn-sm delete-btn'>X</button>`;
+
+            expenseList.appendChild(li);
+            document.getElementById("expense-name").value = "";
+            document.getElementById("expense-amount").value = "";
+          }
+        });
+
+      expenseList.addEventListener("click", function (e) {
+        if (e.target.classList.contains("delete-btn")) {
+          const item = e.target.parentElement;
+          const amountToRemove = parseFloat(item.textContent.split("- ₹")[1]);
+          totalAmount -= amountToRemove;
+          totalDisplay.textContent = totalAmount;
+          item.remove();
+        }
+      });
+    </script>
+  </body>
+</html>

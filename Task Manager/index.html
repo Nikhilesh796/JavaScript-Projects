@@ -5,34 +5,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Task Manager</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        background-color: #0f172a;
+        overflow: hidden;
+      }
+      .shape {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        animation: float 8s infinite ease-in-out;
+      }
+      @keyframes float {
+        0% {
+          transform: translateY(0) translateX(0);
+        }
+        50% {
+          transform: translateY(-50px) translateX(50px);
+        }
+        100% {
+          transform: translateY(0) translateX(0);
+        }
+      }
+    </style>
   </head>
-  <body class="bg-gray-100 min-h-screen flex items-center justify-center">
-    <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-lg">
-      <h2 class="text-2xl font-semibold text-center text-gray-700">
-        Task Manager
-      </h2>
-
-      <!-- Task Input -->
-      <div class="mt-4 flex">
+  <body>
+    <div
+      class="relative flex flex-col items-center justify-center min-h-screen"
+    >
+      <div class="bg-white p-6 rounded-lg shadow-lg w-96 relative z-10">
+        <h1 class="text-xl font-bold mb-4">Task Manager</h1>
         <input
           type="text"
-          id="task-input"
-          class="w-full p-2 border rounded-l focus:outline-none"
+          id="taskInput"
           placeholder="Enter a task"
+          class="border p-2 w-full rounded"
         />
         <button
-          id="add-task"
-          class="bg-blue-500 text-white px-4 py-2 rounded-r"
+          onclick="addTask()"
+          class="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
         >
-          Add
+          Add Task
         </button>
+        <ul id="taskList" class="mt-4"></ul>
       </div>
-
-      <!-- Task List -->
-      <ul id="task-list" class="mt-4 space-y-2"></ul>
     </div>
 
-    <script type="module" src="firebase-config.js"></script>
-    <script type="module" src="app.js"></script>
+    <script>
+      function addTask() {
+        let taskInput = document.getElementById("taskInput");
+        let taskList = document.getElementById("taskList");
+        if (taskInput.value.trim() === "") return;
+
+        let li = document.createElement("li");
+        li.textContent = taskInput.value;
+        li.className =
+          "p-2 bg-gray-200 mt-2 rounded flex justify-between items-center";
+
+        let removeBtn = document.createElement("button");
+        removeBtn.textContent = "✓";
+        removeBtn.className = "ml-2 px-3 py-1 bg-green-500 text-white rounded";
+        removeBtn.onclick = function () {
+          li.style.textDecoration = "line-through";
+          setTimeout(() => li.remove(), 2000);
+        };
+
+        li.appendChild(removeBtn);
+        taskList.appendChild(li);
+        taskInput.value = "";
+      }
+    </script>
+
+    <script>
+      // Generate floating shapes
+      for (let i = 0; i < 10; i++) {
+        let shape = document.createElement("div");
+        shape.className = "shape";
+        shape.style.left = `${Math.random() * 100}vw`;
+        shape.style.top = `${Math.random() * 100}vh`;
+        shape.style.animationDuration = `${5 + Math.random() * 5}s`;
+        document.body.appendChild(shape);
+      }
+    </script>
   </body>
 </html>

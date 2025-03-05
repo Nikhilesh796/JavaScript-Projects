@@ -19,10 +19,6 @@ It allows users to **add, delete, and complete tasks** with a smooth **animated 
 - **JavaScript** for interactivity  
 - **Firebase** for task storage (optional)  
 
-## 📸 Screenshots  
-
-(Attach screenshots of the UI here)
-
 ## 🚀 How to Run
 
 1. Clone this repository:
